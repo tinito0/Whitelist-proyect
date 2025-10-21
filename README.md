@@ -5,34 +5,6 @@ La interfaz está diseñada para imitar la estética del juego, ofreciendo una e
 
 ---
 
-## ✨ Características
-
-- 🎨 **Interfaz Web Personalizada:** estética basada en Minecraft, con fuentes pixeladas y diseño similar al juego.  
-- ⚡ **Integración con RCON:** se comunica directamente con tu servidor de Minecraft para añadir jugadores a la whitelist en tiempo real.  
-- 🔒 **Seguridad por Código:** protege tu servidor de accesos no deseados mediante un código secreto.  
-- 🧩 **Notificaciones Dinámicas:** muestra mensajes de éxito o error animados (sin usar `alert()` del navegador).  
-- 📱 **Diseño Responsivo:** se adapta a computadoras y dispositivos móviles.  
-- 🛠️ **Fácil de Implementar:** puede correr en el mismo VPS que tu servidor de Minecraft o de forma local.
-
----
-
-## 🚀 Tecnologías Utilizadas
-
-- **Backend:** Node.js, Express.js  
-- **Comunicación con Minecraft:** [rcon-client](https://www.npmjs.com/package/rcon-client)  
-- **Frontend:** HTML5, CSS3 (con animaciones y diseño responsivo)
-
----
-
-## 📋 Requisitos
-
-Antes de empezar, asegurate de tener lo siguiente:
-
-1. Un servidor de **Minecraft (Java Edition)** con **RCON habilitado** en el archivo `server.properties`.  
-2. **Node.js** instalado en tu máquina (PC o VPS).  
-   👉 [Descargar Node.js](https://nodejs.org)
-
----
 
 ## ⚙️ Instalación y Configuración
 
