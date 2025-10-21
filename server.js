@@ -5,8 +5,8 @@ const cors = require('cors'); // Para permitir la conexión desde el navegador
 
 
 // Los detalles de RCON de tu "server.properties"
-const RCON_HOST = 'sv8.minehost.pro';
-const RCON_PORT = 25491;
+const RCON_HOST = 'sv9.minehost.pro';
+const RCON_PORT = 25480;
 const RCON_PASSWORD = 'matichaparro202';
 
 // Tu barrera de seguridad
@@ -72,4 +72,5 @@ app.listen(PORT, () => {
   console.log(`[SERVER] Panel de Whitelist corriendo. Accede en http://localhost:${PORT}`);
 
 });
+
 
