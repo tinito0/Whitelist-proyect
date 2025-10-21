@@ -265,7 +265,7 @@
         return;
       }
       try {
-        const response = await fetch('http://localhost:3000/add_whitelist', {
+        const response = await fetch('http://localhost:80/add_whitelist', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
@@ -305,3 +305,4 @@
 </body>
 
 </html>
+
