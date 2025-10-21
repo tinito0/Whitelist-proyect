@@ -1,9 +1,4 @@
-# 🧱 Panel Web de Whitelist para ManicomioLAND
-
-Este proyecto es una aplicación web simple pero potente, creada con **Node.js**, que permite a los jugadores añadirse a la whitelist de un servidor de **Minecraft** de forma segura mediante un **código de invitación**.  
-La interfaz está diseñada para imitar la estética del juego, ofreciendo una experiencia inmersiva para los usuarios.
-
----
+# Panel Web de Whitelist para ManicomioLAND
 
 
 ## ⚙️ Instalación y Configuración
@@ -11,16 +6,6 @@ La interfaz está diseñada para imitar la estética del juego, ofreciendo una e
 ### 1️⃣ Clonar o Descargar el Repositorio
 
 Descargá los archivos y colocalos en una carpeta en tu servidor o PC.  
-La estructura de carpetas debe ser la siguiente:
-
-```
-/tu-proyecto-whitelist/
-├── public/
-│   └── index.html
-└── server.js
-```
-
-> 💡 **Importante:** el archivo `index.html` debe estar dentro de la carpeta `public` para que el servidor pueda encontrarlo.
 
 ---
 
@@ -33,21 +18,6 @@ npm install express rcon-client body-parser cors
 ```
 
 ---
-
-### 3️⃣ Configurar tus Datos
-
-Abrí el archivo `server.js` y modificá las constantes del inicio:
-
-```js
-// Los detalles de RCON de tu "server.properties"
-const RCON_HOST = '127.0.0.1'; // Déjalo así si corre en la misma máquina que el server
-const RCON_PORT = 25575;
-const RCON_PASSWORD = 'TU_CONTRASEÑA_RCON_AQUI';
-
-// ¡TU BARRERA DE SEGURIDAD!
-// Cámbialo por un código secreto para tus jugadores.
-const CODIGO_SECRETO = 'minecraft-secreto-123';
-```
 
 > ⚠️ Asegurate de que la `RCON_PASSWORD` coincida exactamente con la del `server.properties`.
 
