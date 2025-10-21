@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whitelist de ManicomioLAND</title>
+  <!-- Importar la fuente pixelada de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Estilos generales del cuerpo de la página */
+    body { 
+      font-family: 'Press Start 2P', cursive;
+      display: grid; 
+      place-items: center; 
+      min-height: 100vh; 
+      margin: 0;
+      background-image: url('./imagen_server.png');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+      animation: zoomIn 25s ease-in-out infinite alternate;
+    }
+
+    /* Estilos para los dos contenedores principales (login y éxito) */
+    .container { 
+      background: rgba(0, 0, 0, 0.75);
+      border: 3px solid #555;
+      border-top-color: #777;
+      border-left-color: #777;
+      box-shadow: 0 0 0 3px #222;
+      padding: 30px; 
+      text-align: center;
+      width: 90%;
+      max-width: 420px;
+      animation: fadeInUp 0.7s ease-in-out;
+      box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+    }
+    
+    /* Contenedor de Éxito, inicialmente oculto */
+    #success-container {
+        display: none;
+        max-width: 600px;
+    }
+
+    /* Título del formulario */
+    #login-container h2 { 
+      margin-top: 0; 
+      font-size: 1.5em;
+      color: #e0c8ff;
+      text-shadow: 3px 3px #3c1c5c;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    /* Título de la página de éxito */
+    #success-container h2 {
+      margin-top: 0; 
+      font-size: 1.5em;
+      color: #57a844; /* Verde de éxito */
+      text-shadow: 3px 3px #2a641c; /* Sombra verde oscura */
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+
+    p { 
+      color: #ddd; 
+      margin-bottom: 25px;
+      font-size: 0.8em;
+      line-height: 1.6;
+    }
+    #success-container p {
+        font-size: 0.9em;
+    }
+
+    /* Campos de texto estilo Minecraft */
+    input { 
+      font-family: 'Press Start 2P', cursive;
+      display: block; 
+      width: calc(100% - 28px); 
+      padding: 12px; 
+      margin: 0 auto 15px auto;
+      border: 2px solid #222;
+      background-color: #111;
+      color: white; 
+      font-size: 0.8em;
+      box-shadow: inset 2px 2px #000;
+    }
+    input::placeholder { color: #aaa; }
+    input:focus { outline: none; border-color: #777; }
+
+    /* Botón estilo Minecraft */
+    button { 
+      font-family: 'Press Start 2P', cursive;
+      width: 100%; 
+      padding: 15px; 
+      background-image: linear-gradient(#707070, #505050);
+      color: white; 
+      border: 3px solid #333;
+      border-top-color: #888;
+      border-left-color: #888;
+      cursor: pointer; 
+      font-size: 0.9em; 
+      text-shadow: 2px 2px #333;
+      transition: all 0.2s;
+    }
+    button:hover { 
+      background-image: linear-gradient(#57a844, #488f38);
+      border-top-color: #79c968;
+      border-left-color: #79c968;
+      transform: translateY(-2px);
+      box-shadow: 0 4px #2a641c;
+    }
+    button:active {
+        border-top-color: #333;
+        border-left-color: #333;
+        transform: translateY(0);
+        box-shadow: none;
+    }
+
+    /* Estilo para la IP en la página de éxito */
+    #ip-address {
+        color: #ffff55;
+        background-color: #222;
+        padding: 8px 12px;
+        border: 2px solid #000;
+        box-shadow: inset 2px 2px #000;
+        display: inline-block;
+        margin-top: 15px;
+    }
+
+    /* Estilos para notificaciones de error */
+    #notification {
+      font-family: 'Press Start 2P', cursive;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 25px;
+      color: white;
+      font-size: 0.8em;
+      text-align: center;
+      border: 3px solid #333;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s;
+      background-color: #dc3545;
+      text-shadow: 2px 2px #8b222c;
+      width: 80%;
+      box-sizing: border-box;
+    }
+    #notification.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -10px);
+    }
+
+    /* Keyframes para animaciones */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes zoomIn {
+        from { transform: scale(1); }
+        to { transform: scale(1.1); }
+    }
+
+    /* --- VERSIÓN MÓVIL --- */
+    /* Estilos que se aplican solo en pantallas de 600px de ancho o menos */
+    @media (max-width: 600px) {
+        h2 {
+            font-size: 1.2em; /* Letra del título más pequeña */
+            text-shadow: 2px 2px #3c1c5c; /* Sombra más pequeña */
+        }
+        #success-container h2 {
+            text-shadow: 2px 2px #2a641c;
+        }
+
+        p {
+            font-size: 0.7em; /* Letra de párrafos más pequeña */
+        }
+        #success-container p {
+            font-size: 0.8em;
+        }
+
+        input, button {
+            font-size: 0.8em; /* Letra de inputs y botón más legible */
+            padding: 14px;
+        }
+        
+        .container {
+            padding: 20px; /* Menos espacio interno en el panel */
+        }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Contenedor del Formulario (visible al inicio) -->
+  <div id="login-container" class="container">
+    <h2>Manicomio<br>Psiquiatrico<br>LAND</h2>
+    <p>Escribe tu nombre de usuario y el código de invitación para entrar.</p>
+    
+    <input type="text" id="username" placeholder="Nombre de usuario" required>
+    <input type="password" id="code" placeholder="Código de Invitación" required>
+    
+    <button id="add-button">Entrar al Servidor</button>
+  </div>
+
+  <!-- Contenedor de Éxito (oculto al inicio) -->
+  <div id="success-container" class="container">
+    <h2>¡FELICITACIONES!</h2>
+    <p>Has sido agregado a la whitelist de<br>Manicomio Psiquiátrico LAND.
+       <br><br>
+       La IP para entrar es:
+       <br>
+       <span id="ip-address">manilandv2.minehost.pro</span>
+    </p>
+  </div>
+
+  <!-- Contenedor para notificaciones de error -->
+  <div id="notification"></div>
+
+  <script>
+    const notification = document.getElementById('notification');
+    const loginContainer = document.getElementById('login-container');
+    const successContainer = document.getElementById('success-container');
+    const usernameInput = document.getElementById('username');
+    const codeInput = document.getElementById('code');
+    const addButton = document.getElementById('add-button');
+
+    function showNotification(message) {
+        notification.textContent = message;
+        notification.classList.add('show');
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 4000);
+    }
+
+    async function submitForm() {
+      const username = usernameInput.value;
+      const code = codeInput.value;
+      if (!username || !code) {
+        showNotification('Completa todos los campos.');
+        return;
+      }
+      try {
+        // Como el HTML y el server.js están en el mismo sitio,
+        // no necesitamos la URL completa 'http://localhost:3000'.
+        const response = await fetch('/add_whitelist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                username: username,
+                code: code
+            })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            // ¡Éxito! Ocultamos el formulario y mostramos el mensaje de felicitaciones.
+            loginContainer.style.display = 'none';
+            successContainer.style.display = 'block';
+        } else {
+            // Error, mostramos la notificación roja.
+            showNotification(data.message);
+        }
+      } catch (error) {
+        showNotification('Error: No se pudo conectar con el servidor.');
+        console.error("Fetch Error:", error);
+      }
+    }
+
+    addButton.addEventListener('click', submitForm);
+
+    function handleEnterKey(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            submitForm();
+        }
+    }
+
+    usernameInput.addEventListener('keydown', handleEnterKey);
+    codeInput.addEventListener('keydown', handleEnterKey);
+  </script>
+
+</body>
+</html>
