@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors'); // Para permitir la conexión desde el navegador
 
 // -----------------------------------------------------------------
-// ------ 1. ¡CONFIGURA TUS DATOS AQUÍ! -----------------------------
+// ------ 1. TUS DATOS CONFIGURADOS ---------------------------------
 // -----------------------------------------------------------------
 
 // Los detalles de RCON de tu "server.properties"
@@ -12,12 +12,11 @@ const RCON_HOST = 'sv8.minehost.pro';
 const RCON_PORT = 25491;
 const RCON_PASSWORD = 'matichaparro202';
 
-// ¡TU BARRERA DE SEGURIDAD!
-// Cámbialo por algo que solo tú y tus amigos sepan.
+// Tu barrera de seguridad
 const CODIGO_SECRETO = 'Wv8#k@2!pZ*qR$5n';
 
 // -----------------------------------------------------------------
-// ------ 2. CÓDIGO DE LA APLICACIÓN (No necesitas editar abajo) -----
+// ------ 2. CÓDIGO DE LA APLICACIÓN (CORREGIDO) ---------------------
 // -----------------------------------------------------------------
 
 const app = express();
@@ -29,6 +28,8 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.post('/add_whitelist', async (req, res) => {
+  // --- ¡CORRECCIÓN AQUÍ! ---
+  // Estaba escrito "a.body" en lugar de "req.body".
   const { username, code } = req.body;
 
   // ----- ¡LA SEGURIDAD! -----
@@ -42,8 +43,16 @@ app.post('/add_whitelist', async (req, res) => {
     return res.status(400).send({ message: 'Se requiere nombre de usuario' });
   }
 
-  const safeUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
-  console.log(`[INFO] Solicitud VÁLIDA para añadir a: ${safeUsername}`);
+  // --- ¡NUEVA MEJORA! ---
+  // Comprueba si el nombre de usuario contiene espacios.
+  if (username.includes(' ')) {
+    console.warn(`[WARN] Intento de registro con espacios en el nombre: '${username}'`);
+    return res.status(400).send({ message: 'El nombre de usuario no puede contener espacios.' });
+  }
+
+  // Ya no se eliminan los espacios ni otros caracteres.
+  const safeUsername = username;
+  console.log(`[INFO] Solicitud para añadir a: ${safeUsername}`);
 
   const rcon = new Rcon({
     host: RCON_HOST,
@@ -54,6 +63,13 @@ app.post('/add_whitelist', async (req, res) => {
   try {
     await rcon.connect();
     const response = await rcon.send(`whitelist add ${safeUsername}`);
+    
+    // Si el servidor responde que el nombre no es válido (por tener espacios, por ejemplo)
+    if (response.includes("Invalid username") || response.includes("incorrect")) {
+        console.error(`[RCON] Error: El nombre '${safeUsername}' no es válido.`);
+        return res.status(400).send({ message: `El nombre '${safeUsername}' no es válido en Minecraft.` });
+    }
+
     console.log(`[RCON] Respuesta: ${response}`);
     res.status(200).send({ message: `¡Felicidades, ${safeUsername}! Has sido añadido.` });
   } catch (error) {

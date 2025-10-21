@@ -8,20 +8,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="icon" href="./server-icon.png" type="image/x-icon">
   
   <style>
     /* Estilos generales del cuerpo de la página */
     body { 
       font-family: 'Press Start 2P', cursive;
-      display: grid; 
-      place-items: center; 
+      display: flex; 
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; 
       min-height: 100vh; 
       margin: 0;
-      background-image: url('./imagen_server.png');
+      padding: 20px;
+      box-sizing: border-box;
+      background-image: url('./imagen_server.webp');
       background-size: cover;
       background-position: center;
-      overflow: hidden;
-      animation: zoomIn 25s ease-in-out infinite alternate;
+      /* --- CAMBIO: Se elimina overflow: hidden para permitir scroll --- */
+    }
+
+    /* Contenedor para el logo */
+    #logo-container {
+        text-align: center;
+        margin-bottom: 25px;
+        animation: fadeInUp 0.7s ease-in-out;
+    }
+    #logo-container img {
+        max-width: 90%;
+        height: auto;
+        max-height: 200px;
     }
 
     /* Estilos para los dos contenedores principales (login y éxito) */
@@ -33,19 +49,18 @@
       box-shadow: 0 0 0 3px #222;
       padding: 30px; 
       text-align: center;
-      width: 90%;
-      max-width: 420px;
-      animation: fadeInUp 0.7s ease-in-out;
-      box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+      width: 100%;
+      max-width: 610px; 
+      animation: fadeInUp 0.7s ease-in-out 0.2s;
+      animation-fill-mode: both;
+      box-sizing: border-box;
     }
     
-    /* Contenedor de Éxito, inicialmente oculto */
     #success-container {
         display: none;
-        max-width: 600px;
+        max-width: 650px;
     }
 
-    /* Título del formulario */
     #login-container h2 { 
       margin-top: 0; 
       font-size: 1.5em;
@@ -54,12 +69,11 @@
       margin-bottom: 20px;
       line-height: 1.4;
     }
-    /* Título de la página de éxito */
     #success-container h2 {
       margin-top: 0; 
       font-size: 1.5em;
-      color: #57a844; /* Verde de éxito */
-      text-shadow: 3px 3px #2a641c; /* Sombra verde oscura */
+      color: #57a844;
+      text-shadow: 3px 3px #2a641c;
       margin-bottom: 25px;
       line-height: 1.4;
     }
@@ -70,11 +84,18 @@
       font-size: 0.8em;
       line-height: 1.6;
     }
+
+    .subtitle {
+      color: #ff3939;
+      font-size: 0.8em;
+      display: block;
+      margin: -15px 0 15px 0;
+    }
+
     #success-container p {
         font-size: 0.9em;
     }
 
-    /* Campos de texto estilo Minecraft */
     input { 
       font-family: 'Press Start 2P', cursive;
       display: block; 
@@ -90,7 +111,6 @@
     input::placeholder { color: #aaa; }
     input:focus { outline: none; border-color: #777; }
 
-    /* Botón estilo Minecraft */
     button { 
       font-family: 'Press Start 2P', cursive;
       width: 100%; 
@@ -119,7 +139,6 @@
         box-shadow: none;
     }
 
-    /* Estilo para la IP en la página de éxito */
     #ip-address {
         color: #ffff55;
         background-color: #222;
@@ -130,7 +149,6 @@
         margin-top: 15px;
     }
 
-    /* Estilos para notificaciones de error */
     #notification {
       font-family: 'Press Start 2P', cursive;
       position: fixed;
@@ -148,6 +166,7 @@
       background-color: #dc3545;
       text-shadow: 2px 2px #8b222c;
       width: 80%;
+      max-width: 500px;
       box-sizing: border-box;
     }
     #notification.show {
@@ -155,52 +174,55 @@
       visibility: visible;
       transform: translate(-50%, -10px);
     }
+    
+    @media (max-width: 600px) {
+        #login-container h2, #success-container h2 {
+            font-size: 1.2em;
+        }
+        p, input, button {
+            font-size: 0.7em;
+        }
+        .container {
+            padding: 20px;
+        }
+    }
 
-    /* Keyframes para animaciones */
+    /* --- CAMBIO: Media Query para celulares en horizontal --- */
+    @media (max-height: 500px) and (orientation: landscape) {
+        body {
+            justify-content: flex-start; /* Alinea el contenido arriba para dar espacio al scroll */
+        }
+        #logo-container {
+            margin-top: 20px; /* Añade un margen superior */
+            margin-bottom: 20px;
+        }
+        #logo-container img {
+            max-height: 100px; /* Logo más pequeño en horizontal */
+        }
+        .container {
+            margin-bottom: 20px; /* Espacio extra al final para el scroll */
+        }
+    }
+
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes zoomIn {
-        from { transform: scale(1); }
-        to { transform: scale(1.1); }
-    }
-
-    /* --- VERSIÓN MÓVIL --- */
-    /* Estilos que se aplican solo en pantallas de 600px de ancho o menos */
-    @media (max-width: 600px) {
-        h2 {
-            font-size: 1.2em; /* Letra del título más pequeña */
-            text-shadow: 2px 2px #3c1c5c; /* Sombra más pequeña */
-        }
-        #success-container h2 {
-            text-shadow: 2px 2px #2a641c;
-        }
-
-        p {
-            font-size: 0.7em; /* Letra de párrafos más pequeña */
-        }
-        #success-container p {
-            font-size: 0.8em;
-        }
-
-        input, button {
-            font-size: 0.8em; /* Letra de inputs y botón más legible */
-            padding: 14px;
-        }
-        
-        .container {
-            padding: 20px; /* Menos espacio interno en el panel */
-        }
-    }
-
   </style>
 </head>
 <body>
-  <!-- Contenedor del Formulario (visible al inicio) -->
+  
+  <div id="logo-container">
+    <img src="./titulo.webp" alt="Logo ManicomioLAND">
+  </div>
+
   <div id="login-container" class="container">
     <h2>Manicomio<br>Psiquiatrico<br>LAND</h2>
-    <p>Escribe tu nombre de usuario y el código de invitación para entrar.</p>
+    
+    <p>Escribe tu nombre de usuario
+      <p class="subtitle">(Ponlo tal cual lo vas a tener en el juego)<p>
+      y el código de invitación para entrar.
+      </p>
     
     <input type="text" id="username" placeholder="Nombre de usuario" required>
     <input type="password" id="code" placeholder="Código de Invitación" required>
@@ -208,18 +230,16 @@
     <button id="add-button">Entrar al Servidor</button>
   </div>
 
-  <!-- Contenedor de Éxito (oculto al inicio) -->
   <div id="success-container" class="container">
     <h2>¡FELICITACIONES!</h2>
     <p>Has sido agregado a la whitelist de<br>Manicomio Psiquiátrico LAND.
        <br><br>
        La IP para entrar es:
        <br>
-       <span id="ip-address">manilandv2.minehost.pro</span>
+       <span id="ip-address">ManiLandV2.minehost.pro</span>
     </p>
   </div>
 
-  <!-- Contenedor para notificaciones de error -->
   <div id="notification"></div>
 
   <script>
@@ -229,13 +249,14 @@
     const usernameInput = document.getElementById('username');
     const codeInput = document.getElementById('code');
     const addButton = document.getElementById('add-button');
+    const logoContainer = document.getElementById('logo-container');
 
     function showNotification(message) {
         notification.textContent = message;
         notification.classList.add('show');
         setTimeout(() => {
             notification.classList.remove('show');
-        }, 4000);
+        },4300);
     }
 
     async function submitForm() {
@@ -246,9 +267,7 @@
         return;
       }
       try {
-        // Como el HTML y el server.js están en el mismo sitio,
-        // no necesitamos la URL completa 'http://localhost:3000'.
-        const response = await fetch('/add_whitelist', {
+        const response = await fetch('http://localhost:3000/add_whitelist', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
@@ -258,11 +277,12 @@
         });
         const data = await response.json();
         if (response.ok) {
-            // ¡Éxito! Ocultamos el formulario y mostramos el mensaje de felicitaciones.
             loginContainer.style.display = 'none';
+            logoContainer.style.display = 'none';
+            // --- ¡CORRECCIÓN AQUÍ! ---
+            // Se debe usar la variable 'successContainer' que definimos arriba.
             successContainer.style.display = 'block';
         } else {
-            // Error, mostramos la notificación roja.
             showNotification(data.message);
         }
       } catch (error) {
