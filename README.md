@@ -81,4 +81,4 @@ pm2 start server.js --name "WhitelistPanel"
 
 # 3. (Opcional) Para ver los logs
 pm2 logs WhitelistPanel
-La página estará disponible en http://<IP_DE_TU_SERVIDOR>:3000.
+La página estará disponible en http://<IP_DE_TU_SERVIDOR>:80.
