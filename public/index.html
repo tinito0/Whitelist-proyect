@@ -4,223 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Whitelist de ManicomioLAND</title>
+  <!-- Importar la fuente pixelada de Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="icon" href="./server-icon.png" type="image/x-icon">
+  <!-- Asegúrate de tener este archivo en la carpeta 'public' -->
+  <link rel="icon" href="./server-icon.png" type="image/x-icon"> 
   
   <style>
-    body { 
-      font-family: 'Press Start 2P', cursive;
-      display: flex; 
-      flex-direction: column;
-      justify-content: center;
-      align-items: center; 
-      min-height: 100vh; 
-      margin: 0;
-      padding: 20px;
-      box-sizing: border-box;
-      background-image: url('./imagen_server.webp');
-      background-size: cover;
-      background-position: center;
-
-    }
-
-    /* Contenedor para el logo */
-    #logo-container {
-        text-align: center;
-        margin-bottom: 25px;
-        animation: fadeInUp 0.7s ease-in-out;
-    }
-    #logo-container img {
-        max-width: 100%;
-        height: auto;
-        max-height: 300px;
-    }
-
-
-    .container { 
-      background: rgba(0, 0, 0, 0.75);
-      border: 3px solid #555;
-      border-top-color: #777;
-      border-left-color: #777;
-      box-shadow: 0 0 0 3px #222;
-      padding: 30px; 
-      text-align: center;
-      width: 100%;
-      max-width: 610px; 
-      animation: fadeInUp 0.7s ease-in-out 0.2s;
-      animation-fill-mode: both;
-      box-sizing: border-box;
-    }
-    
-    #success-container {
-        display: none;
-        max-width: 650px;
-    }
-
-    #login-container h2 { 
-      margin-top: 0; 
-      font-size: 1.5em;
-      color: #70addc;
-      text-shadow: 3px 3px #395368;
-      margin-bottom: 20px;
-      line-height: 1.4;
-    }
-    #success-container h2 {
-      margin-top: 0; 
-      font-size: 1.5em;
-      color: #57a844;
-      text-shadow: 3px 3px #2a641c;
-      margin-bottom: 25px;
-      line-height: 1.4;
-    }
-
-    p { 
-      color: #ddd; 
-      margin-bottom: 25px;
-      font-size: 0.8em;
-      line-height: 1.6;
-    }
-
-    .subtitle {
-      color: #ff3939;
-      font-size: 0.8em;
-      display: block;
-      margin: -15px 0 15px 0;
-    }
-
-    #success-container p {
-        font-size: 0.9em;
-    }
-
-    input { 
-      font-family: 'Press Start 2P', cursive;
-      display: block; 
-      width: calc(100% - 28px); 
-      padding: 12px; 
-      margin: 0 auto 15px auto;
-      border: 2px solid #222;
-      background-color: #111;
-      color: white; 
-      font-size: 0.8em;
-      box-shadow: inset 2px 2px #000;
-    }
-    input::placeholder { color: #aaa; }
-    input:focus { outline: none; border-color: #777; }
-
-    button { 
-      font-family: 'Press Start 2P', cursive;
-      width: 100%; 
-      padding: 15px; 
-      background-image: linear-gradient(#707070, #505050);
-      color: white; 
-      border: 3px solid #333;
-      border-top-color: #888;
-      border-left-color: #888;
-      cursor: pointer; 
-      font-size: 0.9em; 
-      text-shadow: 2px 2px #333;
-      transition: all 0.2s;
-    }
-    button:hover { 
-      background-image: linear-gradient(#57a844, #488f38);
-      border-top-color: #79c968;
-      border-left-color: #79c968;
-      transform: translateY(-2px);
-      box-shadow: 0 4px #2a641c;
-    }
-    button:active {
-        border-top-color: #333;
-        border-left-color: #333;
-        transform: translateY(0);
-        box-shadow: none;
-    }
-
-    #ip-address {
-        color: #ffff55;
-        background-color: #222;
-        padding: 8px 12px;
-        border: 2px solid #000;
-        box-shadow: inset 2px 2px #000;
-        display: inline-block;
-        margin-top: 15px;
-    }
-
-    #notification {
-      font-family: 'Press Start 2P', cursive;
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 15px 25px;
-      color: white;
-      font-size: 0.8em;
-      text-align: center;
-      border: 3px solid #333;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.5s;
-      background-color: #dc3545;
-      text-shadow: 2px 2px #8b222c;
-      width: 80%;
-      max-width: 500px;
-      box-sizing: border-box;
-    }
-    #notification.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translate(-50%, -10px);
-    }
-    
-    @media (max-width: 600px) {
-        #login-container h2, #success-container h2 {
-            font-size: 1.2em;
-        }
-        p, input, button {
-            font-size: 0.7em;
-        }
-        .container {
-            padding: 20px;
-        }
-    }
-
-    /* --- CAMBIO: Media Query para celulares en horizontal --- */
-    @media (max-height: 500px) and (orientation: landscape) {
-        body {
-            justify-content: flex-start; /* Alinea el contenido arriba para dar espacio al scroll */
-        }
-        #logo-container {
-            margin-top: 20px; /* Añade un margen superior */
-            margin-bottom: 20px;
-        }
-        #logo-container img {
-            max-height: 100px; /* Logo más pequeño en horizontal */
-        }
-        .container {
-            margin-bottom: 20px; /* Espacio extra al final para el scroll */
-        }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    body{font-family:'Press Start 2P',cursive;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:20px;box-sizing:border-box;background-image:url(./imagen_server.webp);background-size:cover;background-position:center}#logo-container{text-align:center;margin-bottom:25px;animation:fadeInUp .7s ease-in-out}#logo-container img{max-width:90%;height:auto;max-height:300px}.container{background:rgba(0,0,0,.75);border:3px solid #555;border-top-color:#777;border-left-color:#777;box-shadow:0 0 0 3px #222;padding:30px;text-align:center;width:100%;max-width:610px;animation:fadeInUp .7s ease-in-out .2s;animation-fill-mode:both;box-sizing:border-box}#success-container{display:none;max-width:650px}#login-container h2{margin-top:0;font-size:1.5em;color:#70addc;text-shadow:3px 3px #395368;margin-bottom:20px;line-height:1.4}#success-container h2{margin-top:0;font-size:1.5em;color:#57a844;text-shadow:3px 3px #2a641c;margin-bottom:25px;line-height:1.4}p{color:#ddd;margin-bottom:25px;font-size:.8em;line-height:1.6}.subtitle{color:#ff3939;font-size:.8em;display:block;margin:-15px 0 15px}#success-container p{font-size:.9em}input{font-family:'Press Start 2P',cursive;display:block;width:calc(100% - 28px);padding:12px;margin:0 auto 15px;border:2px solid #222;background-color:#111;color:#fff;font-size:.8em;box-shadow:inset 2px 2px #000}input::placeholder{color:#aaa}input:focus{outline:0;border-color:#777}button{font-family:'Press Start 2P',cursive;width:100%;padding:15px;background-image:linear-gradient(#707070,#505050);color:#fff;border:3px solid #333;border-top-color:#888;border-left-color:#888;cursor:pointer;font-size:.9em;text-shadow:2px 2px #333;transition:all .2s}button:hover{background-image:linear-gradient(#57a844,#488f38);border-top-color:#79c968;border-left-color:#79c968;transform:translateY(-2px);box-shadow:0 4px #2a641c}button:active{border-top-color:#333;border-left-color:#333;transform:translateY(0);box-shadow:none}#ip-address{color:#ffff55;background-color:#222;padding:8px 12px;border:2px solid #000;box-shadow:inset 2px 2px #000;display:inline-block;margin-top:15px}#notification{font-family:'Press Start 2P',cursive;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:15px 25px;color:#fff;font-size:.8em;text-align:center;border:3px solid #333;opacity:0;visibility:hidden;transition:all .5s;background-color:#dc3545;text-shadow:2px 2px #8b222c;width:80%;max-width:500px;box-sizing:border-box}#notification.show{opacity:1;visibility:visible;transform:translate(-50%,-10px)}@media (max-width:600px){#login-container h2,#success-container h2{font-size:1.2em}p,input,button{font-size:.7em}.container{padding:20px}}@media (max-height:500px) and (orientation:landscape){body{justify-content:flex-start}#logo-container{margin-top:20px;margin-bottom:20px}#logo-container img{max-height:100px}.container{margin-bottom:20px}}@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
   </style>
 </head>
 <body>
   
+  <!-- Asegúrate de tener este archivo en la carpeta 'public' -->
   <div id="logo-container">
-    <img src="./titulo.webp" alt="Logo ManicomioLAND">
+    <img src="./titulo.webp" alt="Logo ManicomioLAND"> 
   </div>
 
   <div id="login-container" class="container">
     <h2>Manicomio<br>Psiquiatrico<br>LAND</h2>
     
+    <!-- --- CORRECCIÓN DE HTML AQUÍ --- -->
     <p>Escribe tu nombre de usuario
       <p class="subtitle">(Ponlo tal cual lo vas a tener en el juego)<p>
       y el código de invitación para entrar.
-      </p>
+    </p> <!-- La etiqueta de cierre </p> va aquí -->
     
     <input type="text" id="username" placeholder="Nombre de usuario" required>
     <input type="password" id="code" placeholder="Código de Invitación" required>
@@ -265,7 +74,9 @@
         return;
       }
       try {
-        const response = await fetch('/add_whitelist', {
+        // La URL relativa '/add_whitelist' funcionará porque
+        // el HTML es servido por el mismo server.js
+        const response = await fetch('/add_whitelist', { 
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
@@ -277,8 +88,6 @@
         if (response.ok) {
             loginContainer.style.display = 'none';
             logoContainer.style.display = 'none';
-            // --- ¡CORRECCIÓN AQUÍ! ---
-            // Se debe usar la variable 'successContainer' que definimos arriba.
             successContainer.style.display = 'block';
         } else {
             showNotification(data.message);
@@ -303,10 +112,4 @@
   </script>
 
 </body>
-
 </html>
-
-
-
-
-
