@@ -1,0 +1,22 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # ¡NUEVO! Esto fuerza a Amplify a usar Node.js 18
+        - nvm use 18 
+    build:
+      commands:
+        # Instala las dependencias de tu package.json
+        - npm ci
+  artifacts:
+    # Le decimos que copie TODOS los archivos necesarios
+    baseDirectory: /
+    files:
+      - server.js
+      - package.json
+      - package-lock.json
+      - public/**/* # ¡Muy importante para tu index.html!
+  cache:
+    paths:
+      - node_modules/**/*
