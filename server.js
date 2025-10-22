@@ -1,7 +1,8 @@
 const express = require('express');
 const { Rcon } = require('rcon-client');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Para permitir la conexión desde el navegador
+const cors = require('cors');// Para permitir la conexión desde el navegador
+const path = require('path');
 
 
 // Los detalles de RCON de tu "server.properties"
@@ -18,7 +19,7 @@ app.use(cors()); // Permite las conexiones
 app.use(bodyParser.json());
 
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/add_whitelist', async (req, res) => {
 
@@ -72,6 +73,7 @@ app.listen(PORT, () => {
   console.log(`[SERVER] Panel de Whitelist corriendo. Accede en http://localhost:${PORT}`);
 
 });
+
 
 
 
